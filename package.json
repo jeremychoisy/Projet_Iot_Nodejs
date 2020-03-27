@@ -1,0 +1,16 @@
+{
+  "name": "tp3_iot_nodejs",
+  "version": "0.0.0",
+  "description": "IOT Nodejs server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Jérémy Choisy",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^3.5.5",
+    "mqtt": "^3.0.0",
+    "body-parser": "latest"
+  }
+}
