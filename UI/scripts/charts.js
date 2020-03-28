@@ -1,7 +1,7 @@
 // Cote UI de l'application "lucioles"
 // Auteur : G.MENEZ
 // RMQ : Manipulation naive (debutant) de Javascript
-const node_url = process.env.NODE_ENV === 'production' ?  'http://54.93.113.62:3000' : 'http://localhost:3000';
+const node_url = 'http://54.93.113.62:3000';
 const PING_WAITING_TIME = 30000;
 const PING_POLLING_TIME = 5000;
 const chartsByObject = new Map();
