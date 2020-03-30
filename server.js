@@ -133,7 +133,7 @@ client.connect((err,  mongodbClient) => {
                         if (err) throw err;
                         if (res.upsertedCount) {
                             console.log(new_entry);
-                            console.log("Inserted in DB in collection :", coll);
+                            // console.log("Inserted in DB in collection :", coll);
                         } else {
                             console.log("Not inserted : duplicate")
                         }
@@ -189,11 +189,11 @@ client.connect((err,  mongodbClient) => {
                            // => gives the Id of the ESP we look for in the db
         const what = req.params.what; // get the "what" from the GET request : temp or light ?
 
-        console.log("\n--------------------------------");
-        console.log("A client/navigator ", req.ip);
-        console.log("sending URL ",  req.originalUrl);
-        console.log("wants to GET ", what);
-        console.log("values from object ", who);
+        // console.log("\n--------------------------------");
+        // console.log("A client/navigator ", req.ip);
+        // console.log("sending URL ",  req.originalUrl);
+        // console.log("wants to GET ", what);
+        // console.log("values from object ", who);
 
         const nb = 200; // Récupération des nb derniers samples
                         // stockés dans la collection associée a ce
@@ -202,12 +202,12 @@ client.connect((err,  mongodbClient) => {
 
         dbo.collection(key).find({who:who}).sort({date:-1}).limit(nb).toArray((err, result) => {
             if (err) throw err;
-            console.log('get on ', key);
-            console.log(result);
+            // console.log('get on ', key);
+            // console.log(result);
             res.json(result.reverse()); // This is the response.
-            console.log('end find');
+            // console.log('end find');
         });
-        console.log('end app.get');
+        // console.log('end app.get');
     });
 
     app.get('/esp',  (req, res) => {

@@ -146,7 +146,6 @@ window.onload = function init() {
                             headers: { Accept: "application/json", },
                             data: {"id": resultat.id},
                             success: (resultat, statut) => {
-                                console.log(resultat);
                                 if (resultat.status === 'success') {
                                     createCheckIcon(icon);
                                     clearTimeout(timeOutRefByObject.get(object.who));
