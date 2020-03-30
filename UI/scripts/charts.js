@@ -1,4 +1,4 @@
-// Cote UI de l'application "lucioles"
+// Cote UI de l'application "TP3_IOT"
 // Auteur : G.MENEZ
 // RMQ : Manipulation naive (debutant) de Javascript
 const node_url = 'http://54.93.113.62:3000';
@@ -110,7 +110,7 @@ window.onload = function init() {
     }
 
     /**
-     * Create DOM element button and spinner
+     * Create DOM elements button and spinner
      * @param container, parent container
      * @param object, esp
      */
@@ -124,13 +124,11 @@ window.onload = function init() {
         icon.setAttribute('id', object.who + '-icon');
         button.addEventListener("click", () => {
             $.ajax({
-                // URL to "GET" : /esp/temp ou /esp/light
                 url: node_url.concat('/ping'),
                 type: 'POST',
                 headers: { Accept: "application/json"},
                 contentType: 'application/json',
                 data: JSON.stringify({who: object.who}),
-                // Callback on success
                 success: (resultat, statut) => {
                     createSpinnerIcon(icon);
                     const timeOutRef = setTimeout(() => {
@@ -140,7 +138,6 @@ window.onload = function init() {
                     timeOutRefByObject.set(object.who, timeOutRef);
                     const intervalRef = setInterval(() => {
                         $.ajax({
-                            // URL to "GET" : /esp/temp ou /esp/light
                             url: node_url.concat('/ping'),
                             type: 'GET',
                             headers: { Accept: "application/json", },
@@ -163,7 +160,7 @@ window.onload = function init() {
         container.appendChild(buttonContainer);
     }
 
-    // Icons factory
+    // Icon factories
 
     function resetIcon(el) {
         el.className = '';
@@ -197,7 +194,7 @@ window.onload = function init() {
      * Get samples from NodeJs server
      * @param path_on_node ,help to compose url to get on Js node
      * @param serie ,for choosing chart/serie on the page
-     * @param who ,which esp do we want to query data
+     * @param who ,which esp do we want to query data from
      */
     function get_samples(path_on_node, serie, who){
         $.ajax({

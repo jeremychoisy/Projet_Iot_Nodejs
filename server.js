@@ -149,11 +149,11 @@ client.connect((err,  mongodbClient) => {
             }
 
             // Debug
-            // console.log("WhoList using the node server :", fleet);
-            // dbo.listCollections().toArray(function (err, collInfos) {
-            //     if (err) throw err;
-            //     console.log("List of collections currently in DB: ", collInfos);
-            // });
+            console.log("WhoList using the node server :", fleet);
+            dbo.listCollections().toArray(function (err, collInfos) {
+                if (err) throw err;
+                console.log("List of collections currently in DB: ", collInfos);
+            });
         } catch(err) {
             console.error(err);
         }
@@ -189,11 +189,11 @@ client.connect((err,  mongodbClient) => {
                            // => gives the Id of the ESP we look for in the db
         const what = req.params.what; // get the "what" from the GET request : temp or light ?
 
-        // console.log("\n--------------------------------");
-        // console.log("A client/navigator ", req.ip);
-        // console.log("sending URL ",  req.originalUrl);
-        // console.log("wants to GET ", what);
-        // console.log("values from object ", who);
+        console.log("\n--------------------------------");
+        console.log("A client/navigator ", req.ip);
+        console.log("sending URL ",  req.originalUrl);
+        console.log("wants to GET ", what);
+        console.log("values from object ", who);
 
         const nb = 200; // Récupération des nb derniers samples
                         // stockés dans la collection associée a ce
@@ -202,12 +202,12 @@ client.connect((err,  mongodbClient) => {
 
         dbo.collection(key).find({who:who}).sort({date:-1}).limit(nb).toArray((err, result) => {
             if (err) throw err;
-            // console.log('get on ', key);
-            // console.log(result);
+            console.log('get on ', key);
+            console.log(result);
             res.json(result.reverse()); // This is the response.
-            // console.log('end find');
+            console.log('end find');
         });
-        // console.log('end app.get');
+        console.log('end app.get');
     });
 
     app.get('/esp',  (req, res) => {

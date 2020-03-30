@@ -16,6 +16,7 @@
 }
 
 .espContainer {
+  height: 15rem;
   display: flex;
   margin-top: 2rem;
 }
@@ -23,7 +24,6 @@
 .sub-container {
   width: 100%;
   height: 100%;
-  border: solid 1px;
 }
 
 .button-container {
