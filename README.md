@@ -1,77 +1,38 @@
 # Projet IOT Nodejs
 
-This is a first version of a nodejs server handling a fleet of objects and an UI.
+## Sujet : Géolocalisation dans un aéroport à l'aide d'un signal wifi.
 
-### Prerequisites
+### MVP :
 
-**nodejs**
+Prototype Arduino composé de deux leds :
+  - Une led rouge
+  - Une led verte
+Possibilité de découper l'aéroport en différentes "zones" selon les aéroports.
 
-https://nodejs.org/en/download/
+### Utilité coté utilisateur :
 
-This is enough if you want to simply test the server on your local machine.
+- Savoir le moment où les portes d'embarquement sont ouvertes.
+- Savoir s’il est loin des portes.
+- Savoir le temps restant pour rejoindre les portes.
 
-#### Otherwise, If you want to deploy the server on a remote machine, you'll need :
+### Utilité coté client : 
 
-**pm2**
-```
-npm i pm2 -g
-```
+- Statistiques liées aux endroits les plus fréquentés.
+- Statistiques liées aux endroits où il a passé le plus de temps, exemple : zone de contrôle.
+- Afficher des points sur une carte d'aéroport.
+- Détecter la sortie de l'aéroport.
 
-**mongoDB**
 
-https://docs.mongodb.com/manual/installation/
+### Scénario : 
 
-**mosquitto**
-
-https://mosquitto.org/download/
-
-### Installing
-#### Local Testing
-- Modify ```UI/scripts/chart.js``` :
-```
-const node_url = 'http://54.93.113.62:3000';
-```
-By
-```
-const node_url = ''http://localhost:3000';
-```
-- install all the modules :
-```
-npm i
-```
-- Start the server :
-```
-node server.js
-```
-NB: you'll be using the mongoDB server and the MQTT server already deployed at 54.93.113.62.
-#### Deploy on a remote machine
-- install your mongoDB and MQTT servers
-- Modify ```UI/scripts/chart.js``` :
-```
-const node_url = 'http://54.93.113.62:3000';
-```
-By
-```
-const node_url = 'http://your_server_ip_address:3000';
-```
-- Modify ```server.js``` :
-```
-const address = process.env.NODE_ENV === 'production' ? 'localhost' : '54.93.113.62';
-```
-By
-```
-const address = process.env.NODE_ENV === 'production' ? 'localhost' : 'your_server_ip_address';
-```
-And  ```mongoDBName``` / ```mongoDBURL``` with your mongoDB credentials.
-- install all the modules :
-```
-npm i
-```
-- Launch the server with pm2 :
-```
-pm2 start ecosystem.config.js
-```
-- Check that everything is running smoothly :
-```
-pm2 list
-```
+M. Gilles Le Conquérant a réservé un vol Nice - Bangkok.
+Il arrive à l'aéroport. 
+Il passe les portiques de sécurité. 
+A la fin du contrôle on lui donne l'objet Arduino (programmé pour son billet). 
+Tant que les portes d'embarquement sont fermées aucune des leds n'est allumée.
+Dès que les portes sont ouvertes les leds s’allument : 
+  - Si les portes d'embarquement sont ouvertes et que Gilles est loin des portes (plus de 1 zone d'écart entre les portes et Gilles) alors la led rouge s'allume.
+  - A l'inverse si Gilles est près des portes la led verte s'allume signalant que les portes d'embarquement sont ouvertes. 
+Gilles décide de s'arrêter acheter des magasine sur l'IOT avant de prendre l'avion. 
+Il voit l'une des leds clignoter l'avertissant qu’il ne lui reste plus que la moitié du temps pour embarquer. 
+Gilles arrive sereinement à son embarquement et peut prendre son vol en 1ère classe.
