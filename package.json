@@ -8,9 +8,10 @@
   },
   "author": "Jérémy Choisy",
   "dependencies": {
+    "body-parser": "latest",
     "express": "^4.17.1",
     "mongodb": "^3.5.5",
-    "mqtt": "^3.0.0",
-    "body-parser": "latest"
+    "mongoose": "^5.9.13",
+    "mqtt": "^3.0.0"
   }
 }
