@@ -3,6 +3,7 @@ const mqtt = require('mqtt');
 const mongoose = require('mongoose');
 
 // Bootstrap models
+require('./app/Config/model');
 require('./app/Fleet/model');
 require('./app/Ping/model');
 require('./app/Position/model');
