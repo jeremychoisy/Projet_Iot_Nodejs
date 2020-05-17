@@ -4,9 +4,9 @@ const Config = mongoose.model('Config');
 
 exports.getZones = async (req, res) => {
     try {
-        const zones = (await Config.findOne({})).zones;
+        const zones = await Config.findOne().populate({path: 'zones.APs'});
         res.status(200).json({
-            zones: zones
+            zones: zones.zones
         });
     } catch (err) {
         res.status(500).json({

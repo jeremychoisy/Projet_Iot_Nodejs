@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const zone = new mongoose.Schema({
     number: {type: String},
-    APs: {type: [String]},
+    APs: [{type: mongoose.Schema.Types.ObjectId, ref: 'AccessPoint', required: true}],
 });
 
 const ConfigSchema = new mongoose.Schema({
