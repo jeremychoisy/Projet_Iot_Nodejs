@@ -15,8 +15,9 @@ require('./app/Position/model');
 const mqttHelpers = require('./helpers/mqtt');
 
 // Topics
-global.TOPIC_PING_REQUEST = 'fleet/ping-request';
-global.TOPIC_PING_ANSWER = 'fleet/ping-answer';
+global.TOPIC_AP = 'POSITION/ACCESS-POINTS';
+global.TOPIC_PING_REQUEST = 'PING/REQUEST';
+global.TOPIC_PING_ANSWER = 'PING/ANSWER';
 
 // express
 const express = require('express');
@@ -63,6 +64,12 @@ Client_mqtt.on('connect', () => {
             console.error(err);
         else
             console.log('Subscribed to ', TOPIC_PING_ANSWER);
+    });
+    Client_mqtt.subscribe(TOPIC_AP, (err) => {
+        if (err)
+            console.error(err);
+        else
+            console.log('Subscribed to ', TOPIC_AP);
     });
 });
 

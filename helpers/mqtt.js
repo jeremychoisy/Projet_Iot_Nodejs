@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const path = require('path');
 
 const Fleet = mongoose.model('Fleet');
 const Ping = mongoose.model('Ping');
@@ -22,16 +23,16 @@ exports.mqttCallBack = async (topic, message) => {
         const fleetIndex = fleet.findIndex((object) => object.macAddress === macAddress);
 
         if (fleetIndex > -1) {
-            if (key === 'ping-answer') {
+            if (key === 'ANSWER') {
                 const res = await Ping.updateOne({_id: mongoose.Types.ObjectId(message.id)}, {$set: {status: 'success'}});
-                if (res.modifiedCount) {
+                if (res.nModified) {
                     console.log("Ping updated successfully  : " + message.id);
                 } else {
                     console.error("Failed to update ping : "  + message.id)
                 }
-            } else if (key === 'position') {
+            } else if (key === 'ACCESS-POINTS') {
                 const client = fleet[fleetIndex];
-                const config = await Config.findOne({});
+                const config = await Config.findOne();
                 const zone = getZone(message.APs, config);
 
                 if (zone >= 0) {
@@ -39,27 +40,24 @@ exports.mqttCallBack = async (topic, message) => {
                     // Check the departure time of the next flight using the flight number associated to the client
                     const flight = await Flight.findOne({flightNumber: client.flightNumber});
                     const departureTime = flight.departureDate;
-
                     if (await isWithinTheTimeLimit(now, departureTime, config)) {
-                        if (flight.zone - zone > config.allowedNbOfZones) {
-                            await publishPing(macAddress, 'timeLimit-run')
+                        if (Math.abs(zone - flight.zone) > config.allowedNbOfZones) {
+                            if (!client.wasTimeLimitRunPinged) {
+                                await publishPing(macAddress, 'timeLimit-run');
+                                await Fleet.findByIdAndUpdate(client._id, {wasTimeLimitRunPinged: true});
+                            }
                         } else {
-                            await publishPing(macAddress, 'timeLimit-walk')
+                            if (!client.wasTimeLimitWalkPinged) {
+                                await publishPing(macAddress, 'timeLimit-walk');
+                                await Fleet.findByIdAndUpdate(client._id, {wasTimeLimitWalkPinged: true});
+                            }
                         }
                     }
-
                     const position = {
-                        date: now.toLocaleString("sv-SE", {timeZone: "Europe/Paris"}),
                         clientId: client._id,
-                        zone: getZone(message.APs)
+                        zone: zone
                     };
-
-                    const res = await Position.create(position);
-                    if (res.insertedCount) {
-                        console.log("Position inserted successfully : " + position);
-                    } else {
-                        console.error("Failed to insert position : " + position)
-                    }
+                    await Position.create(position);
                 } else {
                     console.error("Could not find any valid zone.")
                 }
@@ -81,7 +79,8 @@ const getZone = async (APs, config) => {
 
 const isWithinTheTimeLimit = async (now, departureDate, config) => {
     const {timeLimit} = config;
-    return (new Date(departureDate).getTime() - now.getTime()) > timeLimit * 60000;
+    const timeDiff = departureDate.getTime() - now.getTime();
+    return timeDiff > 0 && departureDate.getTime() - now.getTime() < timeLimit * 60000;
 };
 
 const publishPing = async (macAddress, type) => {

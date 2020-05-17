@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const FlightSchema = new mongoose.Schema({
     flightNumber : {type: String},
-    departureDate : {type: String},
+    departureDate : {type: Date, default: Date.now()},
     zone : {type: Number},
 });
 

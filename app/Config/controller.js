@@ -19,7 +19,7 @@ exports.addZone = async (req, res) => {
     try {
         const ret = await Config.findOneAndUpdate({}, {$push: {zones: req.body}});
 
-        if(ret.modifiedCount) {
+        if(ret.nModified) {
             const zones = (await Config.findOne({})).zones;
             res.status(200).json({
                 zones: zones

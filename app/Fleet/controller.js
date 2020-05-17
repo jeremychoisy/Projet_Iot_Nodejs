@@ -4,7 +4,7 @@ const Fleet = mongoose.model('Fleet');
 
 exports.getFleetList = async (req, res) => {
     try {
-        const fleet = await Fleet.find({});
+        const fleet = await Fleet.find();
         res.status(200).json({
             fleet: fleet
         });
