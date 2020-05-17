@@ -17,10 +17,18 @@ exports.getZones = async (req, res) => {
 
 exports.addZone = async (req, res) => {
     try {
-        const zones = (await Config.updateOne({}, {$push: {zones: req.body}}, {new: true})).zones;
-        res.status(200).json({
-            zones: zones
-        });
+        const ret = await Config.findOneAndUpdate({}, {$push: {zones: req.body}});
+
+        if(ret.modifiedCount) {
+            const zones = (await Config.findOne({})).zones;
+            res.status(200).json({
+                zones: zones
+            });
+        } else {
+            res.status(500).json({
+                message: "Zone could not be inserted to the configuration."
+            });
+        }
     } catch (err) {
         res.status(500).json({
             message: err.toString()

@@ -17,8 +17,15 @@ exports.getFleetList = async (req, res) => {
 
 exports.addToFleet = async (req, res) => {
     try {
+        // Remove any already existing fleet member using the same object
+        await Fleet.deleteMany({macAddress: req.body.macAddress});
+
+        // Add the new fleet member
         await Fleet.create(req.body);
+
+        // Fetch the updated list
         const fleet = await Fleet.find();
+
         res.status(200).json({
             fleet: fleet
         });

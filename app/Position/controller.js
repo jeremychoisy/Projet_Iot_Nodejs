@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const Position = mongoose.model('Position');
 
-exports.getByMacAddress = async (req, res) => {
+exports.getByClientId = async (req, res) => {
     try {
         const positions = await Position
-            .find({macAddress: req.query.macAddress})
+            .find({clientId: req.query.id})
             .sort({date: -1});
         res.status(200).json({
             positions: positions

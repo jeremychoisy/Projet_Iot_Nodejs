@@ -5,9 +5,8 @@ const Ping = mongoose.model('Ping');
 exports.publishPing = async (req, res) => {
     try {
         const macAddress = req.body.macAddress;
-        const ping = new Ping({macAddress: macAddress, status: 'pending'});
-        await ping.save();
-        Client_mqtt.publish(TOPIC_PING_REQUEST, JSON.stringify({macAddress: macAddress, id: ping._id}));
+        const ping = Ping.create({macAddress: macAddress, status: 'pending', type: req.body.type});
+        Client_mqtt.publish(TOPIC_PING_REQUEST, JSON.stringify({macAddress: macAddress, id: ping._id, type: req.body.type}));
         res.status(200).json({
             ping: ping
         });

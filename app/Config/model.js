@@ -2,11 +2,13 @@ const mongoose = require('mongoose');
 
 const zone = new mongoose.Schema({
     number: {type: String},
-    AP: {type: [String]},
+    APs: {type: [String]},
 });
 
 const ConfigSchema = new mongoose.Schema({
-    zones : {type: [zone]}
+    timeLimit: {type: Number},
+    zones : {type: [zone]},
+    allowedNbOfZones: {type: Number}
 });
 
 module.exports = mongoose.model('Config', ConfigSchema);
