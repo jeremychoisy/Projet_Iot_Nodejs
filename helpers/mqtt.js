@@ -36,7 +36,7 @@ exports.mqttCallBack = async (topic, message) => {
             // If the message is APs data
             } else if (key === 'ACCESS-POINTS') {
                 const client = fleet[fleetIndex];
-                const config = await Config.findOne();
+                const config = await Config.findOne().populate({path: 'zones.APs'});
                 // get the zone associated to the APs
                 const zone = getZone(message.APs, config);
                 // If a zone was found
@@ -85,7 +85,7 @@ exports.mqttCallBack = async (topic, message) => {
 const getZone = async (APs, config) => {
     const sortedAPs = APs.sort();
     const {zones} = config;
-    const associatedZone = zones.find((zone) => JSON.stringify(zone.APs.sort()) === JSON.stringify(sortedAPs));
+    const associatedZone = zones.find((zone) => JSON.stringify(zone.APs.map((AP) => AP.name).sort()) === JSON.stringify(sortedAPs));
     return associatedZone ? associatedZone.number : -1;
 };
 
