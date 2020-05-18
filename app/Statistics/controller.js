@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 
 const Position = mongoose.model('Position');
 
+/*
+ Get the number of positions by zones
+ */
 exports.getStatisticsForZones = async (req, res) => {
     try {
         const allPositions = await Position.find();

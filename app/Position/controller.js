@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 
 const Position = mongoose.model('Position');
 
+/*
+ Get all the positions for a given client
+ */
 exports.getPositionsByClientId = async (req, res) => {
     try {
         const positions = await Position
@@ -17,6 +20,9 @@ exports.getPositionsByClientId = async (req, res) => {
     }
 };
 
+/*
+ Get the last (current?) position for a given client
+ */
 exports.getLastPositionByClientId = async (req, res) => {
     try {
         const positions = await Position

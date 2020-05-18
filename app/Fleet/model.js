@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+/*
+ Fleet model
+ */
 const FleetSchema = new mongoose.Schema({
     macAddress : {type: String, required:true},
     flightNumber : {type: String, required:true},

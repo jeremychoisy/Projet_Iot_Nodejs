@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 
 const AP = mongoose.model('AccessPoint');
 
+/*
+ Add an access point to the AP collection
+ */
 exports.addAP = async (req, res) => {
     try {
         await AP.create(req.body);
@@ -16,6 +19,9 @@ exports.addAP = async (req, res) => {
     }
 };
 
+/*
+ Remove an access point from the AP collection
+ */
 exports.deleteAP = async (req, res) => {
     try {
         const ret = await AP.deleteOne({_id: mongoose.Types.ObjectId(req.body.id)});
@@ -36,6 +42,9 @@ exports.deleteAP = async (req, res) => {
     }
 };
 
+/*
+ Get all the access points from the AP collection
+ */
 exports.getAP = async (req, res) => {
     try {
         const APs = await AP.find();

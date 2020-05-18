@@ -57,7 +57,7 @@ mongoose.connect(mongoDBURL, {useNewUrlParser: true, useUnifiedTopology: true})
 const mqtt_url = 'http://' + address + ':1883';
 global.Client_mqtt = mqtt.connect(mqtt_url);
 
-// Subscription
+// Subscriptions
 Client_mqtt.on('connect', () => {
     Client_mqtt.subscribe(TOPIC_PING_ANSWER, (err) => {
         if (err)

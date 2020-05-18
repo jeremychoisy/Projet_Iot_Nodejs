@@ -4,7 +4,10 @@
   "description": "IOT Nodejs server",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "pm2_start": "pm2 start ecosystem.config.js",
+    "pm2_restart": "pm2 restart ecosystem.config.js",
+    "pm2_delete": "pm2 delete ecosystem.config.js"
   },
   "author": "Jérémy Choisy",
   "dependencies": {

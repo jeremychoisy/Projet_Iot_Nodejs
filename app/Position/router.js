@@ -2,6 +2,9 @@ const controller = require('./controller');
 const express = require('express');
 const router = express.Router();
 
+/*
+ GET routes
+ */
 router.get('/get-by-client-id', controller.getPositionsByClientId);
 router.get('/get-last-by-client-id', controller.getLastPositionByClientId);
 

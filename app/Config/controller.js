@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 
 const Config = mongoose.model('Config');
 
+/*
+ Get all the zones from the document in the Config collection
+ */
 exports.getZones = async (req, res) => {
     try {
         const zones = await Config.findOne().populate({path: 'zones.APs'});
@@ -15,6 +18,9 @@ exports.getZones = async (req, res) => {
     }
 };
 
+/*
+ Add a zone to the document in the Config collection
+ */
 exports.addZone = async (req, res) => {
     try {
         const ret = await Config.findOneAndUpdate({}, {$push: {zones: req.body}});

@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+/*
+ Ping model
+ */
 const PingSchema = new mongoose.Schema({
     clientId : {type: mongoose.Schema.Types.ObjectId, ref: 'Fleet', required: true},
     status: {type: String, enum: ['inactive','pending','completed', 'failed'], default: 'inactive'},

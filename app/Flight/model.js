@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+/*
+ Flight model
+ */
 const FlightSchema = new mongoose.Schema({
     flightNumber : {type: String},
     departureDate : {type: Date, default: Date.now()},

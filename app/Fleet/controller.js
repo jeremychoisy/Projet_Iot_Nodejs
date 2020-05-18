@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 
 const Fleet = mongoose.model('Fleet');
 
+/*
+ Get all the objects from the Fleet collection
+ */
 exports.getFleetList = async (req, res) => {
     try {
         const fleet = await Fleet.find();
@@ -15,6 +18,9 @@ exports.getFleetList = async (req, res) => {
     }
 };
 
+/*
+ Add an object to the Fleet collection
+ */
 exports.addToFleet = async (req, res) => {
     try {
         // Remove any already existing fleet member using the same object
@@ -36,6 +42,9 @@ exports.addToFleet = async (req, res) => {
     }
 };
 
+/*
+ Remove an object from the Fleet collection
+ */
 exports.removeFromFleet = async (req, res) => {
     try {
         const ret = await Fleet.deleteOne({macAddress: req.body.macAddress});
